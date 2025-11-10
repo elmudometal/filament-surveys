@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ElmudoDev\FilamentSurveys\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentSurveysCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-surveys';
 
     public $description = 'My command';
 
