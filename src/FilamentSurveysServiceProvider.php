@@ -31,6 +31,8 @@ class FilamentSurveysServiceProvider extends PackageServiceProvider
          */
         $package->name(static::$name)
             ->hasCommands($this->getCommands())
+            ->hasRoute('web')
+            ->runsMigrations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
@@ -146,7 +148,11 @@ class FilamentSurveysServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_filament-surveys_table',
+            'create_surveys_table',
+            'create_survey_questions_table',
+            'create_survey_options_table',
+            'create_survey_participants_table',
+            'create_survey_responses_table',
         ];
     }
 }
