@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\SurveyResultResource\Pages;
+namespace ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages;
 
-use App\Exports\SurveyResultsExport;
-use App\Filament\Resources\SurveyResultResource;
-use App\Models\Survey;
+use ElmudoDev\FilamentSurveys\Models\Survey;
+use ElmudoDev\FilamentSurveys\Resources\SurveyResultResource;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ManageRecords;
 use Maatwebsite\Excel\Facades\Excel;

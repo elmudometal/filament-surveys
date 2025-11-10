@@ -103,8 +103,8 @@ class FilamentSurveysServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-surveys', __DIR__ . '/../resources/dist/components/filament-surveys.js'),
-            Css::make('filament-surveys-styles', __DIR__ . '/../resources/dist/filament-surveys.css'),
-            Js::make('filament-surveys-scripts', __DIR__ . '/../resources/dist/filament-surveys.js'),
+            //            Css::make('filament-surveys-styles', __DIR__ . '/../resources/dist/filament-surveys.css'),
+            //            Js::make('filament-surveys-scripts', __DIR__ . '/../resources/dist/filament-surveys.js'),
         ];
     }
 

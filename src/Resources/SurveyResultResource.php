@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace ElmudoDev\FilamentSurveys\Resources;
 
-use App\Exports\SurveyResultsExport;
-use App\Models\Survey;
-use App\Models\SurveyResponse;
+use ElmudoDev\FilamentSurveys\Models\Survey;
+use ElmudoDev\FilamentSurveys\Models\SurveyResponse;
 use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -109,7 +108,7 @@ class SurveyResultResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\SurveyResultResource\Pages\ManageSurveyResults::route('/'),
+            'index' => \ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages\ManageSurveyResults::route('/'),
         ];
     }
 }

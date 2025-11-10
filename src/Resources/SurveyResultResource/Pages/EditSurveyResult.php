@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\SurveyResultResource\Pages;
+namespace ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages;
 
-use App\Filament\Resources\SurveyResultResource;
+use ElmudoDev\FilamentSurveys\Resources\SurveyResultResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
