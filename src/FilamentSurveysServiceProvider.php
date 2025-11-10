@@ -2,6 +2,8 @@
 
 namespace ElmudoDev\FilamentSurveys;
 
+use ElmudoDev\FilamentSurveys\Commands\FilamentSurveysCommand;
+use ElmudoDev\FilamentSurveys\Testing\TestsFilamentSurveys;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -13,8 +15,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use ElmudoDev\FilamentSurveys\Commands\FilamentSurveysCommand;
-use ElmudoDev\FilamentSurveys\Testing\TestsFilamentSurveys;
 
 class FilamentSurveysServiceProvider extends PackageServiceProvider
 {
