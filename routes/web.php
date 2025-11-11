@@ -11,7 +11,7 @@ Route::group([
     Route::view('no-disponible', 'filament-surveys::survey.not_available')
         ->name('not_available');
 
-    Route::get('{unique_link}', [SurveyController::class, 'showSurvey'])
+    Route::get('{survey:slug}/{model_id}', [SurveyController::class, 'showSurvey'])
         ->name('fill');
 
     Route::post('{unique_link}/submit', [SurveyController::class, 'submitSurvey'])

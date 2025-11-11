@@ -43,19 +43,17 @@ class SurveyController
         return redirect()->back()->with('success', 'Invitaciones enviadas');
     }
 
-    public function showSurvey(string $unique_link): View | RedirectResponse
+    public function showSurvey(Survey $survey, $model_id): View | RedirectResponse
     {
-        $participant = SurveyParticipant::where('unique_link', $unique_link)
-            ->where('completed', false)
-            ->first();
 
-        if (! $participant) {
+        if (SurveyResponse::where('model_id', $model_id)->exists()) {
+            return redirect()->route('survey.thanks');
+        }
+        if ($survey) {
             return redirect()->route('survey.not_available')->with('error', 'Enlace inválido o encuesta ya completada');
         }
 
-        $survey = $participant->survey;
-
-        return view('filament-surveys::survey.fill', ['survey' => $survey, 'participant' => $participant]);
+        return view('filament-surveys::survey.fill', ['survey' => $survey, 'model_id' => $model_id]);
     }
 
     public function submitSurvey(SubmitSurveyResponseRequest $request, string $unique_link): RedirectResponse

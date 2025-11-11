@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SurveyResponse extends Model
 {
     protected $fillable = [
-        'survey_participant_id',
         'question_id',
         'option_id',
     ];

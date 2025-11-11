@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('survey_responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('survey_participant_id')->constrained()->onDelete('cascade');
+            $table->morphs('model');
             $table->foreignId('question_id')->constrained('survey_questions')->onDelete('cascade');
             $table->foreignId('option_id')->constrained('survey_options')->onDelete('cascade');
             $table->timestamps();
