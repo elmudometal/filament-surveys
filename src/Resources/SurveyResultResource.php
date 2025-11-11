@@ -111,4 +111,9 @@ class SurveyResultResource extends Resource
             'index' => \ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages\ManageSurveyResults::route('/'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament-surveys::filament-surveys.nav.group');
+    }
 }

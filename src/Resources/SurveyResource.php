@@ -113,4 +113,9 @@ class SurveyResource extends Resource
             'edit' => Pages\EditSurvey::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament-surveys::filament-surveys.nav.group');
+    }
 }

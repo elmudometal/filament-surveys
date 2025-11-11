@@ -14,7 +14,11 @@ class FilamentSurveysPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel->resources([
+            Resources\SurveyResource::class,
+            Resources\SurveyResultResource::class,
+            Resources\SurveyParticipantResource::class,
+        ]);
     }
 
     public function boot(Panel $panel): void
