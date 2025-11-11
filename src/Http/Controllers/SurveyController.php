@@ -45,25 +45,17 @@ class SurveyController
 
     public function showSurvey(Survey $survey, $model_id): View | RedirectResponse
     {
-
-        if (SurveyResponse::where('model_id', $model_id)->exists()) {
+        if (SurveyResponse::query()
+            ->where('model_type', config('filament-surveys.model_type'))
+            ->where('model_id', $model_id)->exists()) {
             return redirect()->route('survey.thanks');
-        }
-        if ($survey) {
-            return redirect()->route('survey.not_available')->with('error', 'Enlace inválido o encuesta ya completada');
         }
 
         return view('filament-surveys::survey.fill', ['survey' => $survey, 'model_id' => $model_id]);
     }
 
-    public function submitSurvey(SubmitSurveyResponseRequest $request, string $unique_link): RedirectResponse
+    public function submitSurvey(SubmitSurveyResponseRequest $request, Survey $survey, $model_id): RedirectResponse
     {
-        /** @var SurveyParticipant $participant */
-        $participant = $request->getParticipant();
-
-        /** @var Survey $survey */
-        $survey = $participant->survey;
-
         foreach ($survey->questions as $question) {
             $rules = $question->is_required ? 'required' : 'nullable';
             $rules .= $question->question_type == 'single_choice' ? '|array|size:1' : '|array';
@@ -74,18 +66,13 @@ class SurveyController
 
             foreach ($request->input("question_{$question->id}") as $optionId) {
                 SurveyResponse::create([
-                    'survey_participant_id' => $participant->id,
+                    'model_type' => config('filament-surveys.model_type'),
+                    'model_id' => $model_id,
                     'question_id' => $question->id,
                     'option_id' => $optionId,
                 ]);
             }
         }
-
-        // Marcar encuesta como completada
-        $participant->update([
-            'completed' => true,
-            'completed_at' => now(),
-        ]);
 
         return redirect()->route('survey.thanks');
     }

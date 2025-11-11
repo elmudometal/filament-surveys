@@ -57,6 +57,44 @@ class SurveyResource extends Resource
                                 'single_choice' => 'Selección única',
                                 'multiple_choice' => 'Selección múltiple',
                             ]),
+                        Forms\Components\Select::make('question_type2')
+                            ->label('Tipo de Pregunta')
+                            ->options([
+                                'simple' => 'Simple',
+                                'score' => 'Puntuación',
+                                'boolean' => 'Si/No',
+                                'free_text' => 'Campo abierto',
+                            ])
+                            ->live()
+                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                // Si es una nueva pregunta (no editada)
+                                $defaultOptions = match ($state) {
+                                    'simple' => [
+                                        ['option_text' => 'Bueno'],
+                                        ['option_text' => 'Regular'],
+                                        ['option_text' => 'Malo'],
+                                    ],
+                                    'score' => [
+                                        ['option_text' => '1'],
+                                        ['option_text' => '2'],
+                                        ['option_text' => '3'],
+                                        ['option_text' => '4'],
+                                        ['option_text' => '5'],
+                                        ['option_text' => '6'],
+                                        ['option_text' => '7'],
+                                    ],
+                                    'boolean' => [
+                                        ['option_text' => 'Si'],
+                                        ['option_text' => 'No'],
+                                    ],
+                                    'free_text' => [
+                                        ['option_text' => ''],
+                                    ],
+                                    default => [],
+                                };
+
+                                $set('options', $defaultOptions);
+                            }),
                         Forms\Components\Repeater::make('options')
                             ->columnSpan(2)
                             ->label('Opciones')

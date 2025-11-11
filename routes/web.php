@@ -14,7 +14,7 @@ Route::group([
     Route::get('{survey:slug}/{model_id}', [SurveyController::class, 'showSurvey'])
         ->name('fill');
 
-    Route::post('{unique_link}/submit', [SurveyController::class, 'submitSurvey'])
+    Route::post('{survey:slug}/{model_id}/submit', [SurveyController::class, 'submitSurvey'])
         ->name('submit');
 
     Route::view('gracias', 'filament-surveys::survey.thanks')

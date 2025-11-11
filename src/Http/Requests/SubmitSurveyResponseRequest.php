@@ -4,33 +4,18 @@ namespace ElmudoDev\FilamentSurveys\Http\Requests;
 
 use Closure;
 use ElmudoDev\FilamentSurveys\Models\Survey;
-use ElmudoDev\FilamentSurveys\Models\SurveyParticipant;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubmitSurveyResponseRequest extends FormRequest
 {
-    private ?SurveyParticipant $participant = null;
-
-    private ?Survey $survey = null;
-
-    public function authorize(): bool
-    {
-        // Validar que el participante exista y no haya completado la encuesta
-        $this->participant = SurveyParticipant::where('unique_link', $this->route('unique_link'))
-            ->where('completed', false)
-            ->first();
-
-        return $this->participant !== null;
-    }
-
     /**
      * @return array<string, array<(Closure)|string>>
      **/
     public function rules(): array
     {
-        $this->survey = $this->participant?->survey;
+        $this->survey = Survey::query()->where('slug', $this->route('survey'))->first();
         $rules = [];
-
+        // $this->dd($this->survey, $this->survey?->questions);
         if (is_iterable($this->survey?->questions)) {
             foreach ($this->survey->questions as $question) {
                 $questionRules = [
@@ -76,10 +61,5 @@ class SubmitSurveyResponseRequest extends FormRequest
         }
 
         return $messages;
-    }
-
-    public function getParticipant(): ?SurveyParticipant
-    {
-        return $this->participant;
     }
 }

@@ -12,4 +12,6 @@ return [
 
     // Longitud del enlace único para participantes
     'link_length' => 32,
+
+    'model_type' => 'App\Models\Survey',
 ];
