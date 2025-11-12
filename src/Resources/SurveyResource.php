@@ -42,6 +42,11 @@ class SurveyResource extends Resource
                 Forms\Components\DatePicker::make('end_date')
                     ->label('Fecha Fin')
                     ->required(),
+                Forms\Components\TagsInput::make('sections')
+                    ->label('Secciones')
+                    ->reorderable()
+                    ->live()
+                    ->required(),
                 Forms\Components\Repeater::make('questions')
                     ->label('Preguntas')
                     ->relationship('questions')
@@ -51,18 +56,18 @@ class SurveyResource extends Resource
                         Forms\Components\TextInput::make('question_text')
                             ->label('Pregunta')
                             ->required(),
+                        Forms\Components\Select::make('question_section')
+                            ->label('Sección')
+                            ->live()
+                            ->options(fn (Forms\Get $get, $state) => $state ? collect($get('../../sections'))->add($state)->mapWithKeys(fn ($v) => [$v => $v]) : collect($get('../../sections'))->mapWithKeys(fn ($v) => [$v => $v])),
                         Forms\Components\Select::make('question_type')
                             ->label('Tipo de Pregunta')
                             ->options([
-                                'single_choice' => 'Selección única',
-                                'multiple_choice' => 'Selección múltiple',
-                            ]),
-                        Forms\Components\Select::make('question_type2')
-                            ->label('Tipo de Pregunta')
-                            ->options([
+                                'single_choice' => 'Opción Única',
                                 'simple' => 'Simple',
                                 'score' => 'Puntuación',
                                 'boolean' => 'Si/No',
+                                'multiple_choice' => 'Opción Múltiple (múltiples respuestas)',
                                 'free_text' => 'Campo abierto',
                             ])
                             ->live()
@@ -87,7 +92,7 @@ class SurveyResource extends Resource
                                         ['option_text' => 'Si'],
                                         ['option_text' => 'No'],
                                     ],
-                                    'free_text' => [
+                                    'single_choice', 'multiple_choice', 'free_text' => [
                                         ['option_text' => ''],
                                     ],
                                     default => [],

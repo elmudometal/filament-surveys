@@ -13,6 +13,7 @@ class SurveyQuestion extends Model
         'question_text',
         'question_type',
         'is_required',
+        'question_section',
     ];
 
     /**

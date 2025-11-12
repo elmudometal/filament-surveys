@@ -13,15 +13,25 @@ class Survey extends Model
 
     protected $fillable = [
         'title',
+        'sections',
         'description',
         'start_date',
         'end_date',
     ];
 
-    protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-    ];
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'date',
+            'end_date' => 'date',
+            'sections' => 'array',
+        ];
+    }
 
     /**
      * Get the options for generating the slug.
