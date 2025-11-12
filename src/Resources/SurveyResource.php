@@ -100,6 +100,13 @@ class SurveyResource extends Resource
 
                                 $set('options', $defaultOptions);
                             }),
+                        Forms\Components\Toggle::make('is_required')
+                            ->label('Requerido')
+                            ->onColor('success')
+                            ->offColor('danger')
+                            ->inline(false)
+                            ->default(true)
+                            ->required(),
                         Forms\Components\Repeater::make('options')
                             ->columnSpan(2)
                             ->label('Opciones')
