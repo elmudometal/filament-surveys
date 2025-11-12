@@ -12,7 +12,10 @@ Route::group([
         ->name('not_available');
 
     Route::get('{survey:slug}/{model_id}', [SurveyController::class, 'showSurvey'])
-        ->name('fill');
+        ->name('fill')
+        ->missing(function () {
+            return Redirect::route('survey.not_available');
+        });
 
     Route::post('{survey:slug}/{model_id}/submit', [SurveyController::class, 'submitSurvey'])
         ->name('submit');
