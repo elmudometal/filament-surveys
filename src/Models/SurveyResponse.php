@@ -12,6 +12,7 @@ class SurveyResponse extends Model
         'model_id',
         'question_id',
         'option_id',
+        'justify',
     ];
 
     /**

@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('survey_responses', function (Blueprint $table) {
             $table->id();
             $table->morphs('model');
+            $table->text('justify')->nullable();
             $table->foreignId('question_id')->constrained('survey_questions')->onDelete('cascade');
             $table->foreignId('option_id')->constrained('survey_options')->onDelete('cascade');
             $table->timestamps();

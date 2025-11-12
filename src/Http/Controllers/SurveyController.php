@@ -69,6 +69,7 @@ class SurveyController
                     'model_type' => config('filament-surveys.model_type'),
                     'model_id' => $model_id,
                     'question_id' => $question->id,
+                    'justify' => $request->input("question_{$question->id}_justify")[$optionId] ?? null,
                     'option_id' => $optionId,
                 ]);
             }
