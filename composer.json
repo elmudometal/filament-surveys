@@ -1,16 +1,16 @@
 {
-    "name": "elmudodev/filament-surveys",
+    "name": "Elmudo-Dev/filament-surveys",
     "description": "Módulo de encuestas para Filament.",
     "keywords": [
-        "ElmudoDev",
+        "Elmudo-Dev",
         "laravel",
         "filament",
         "surveys"
     ],
-    "homepage": "https://github.com/elmudodev/filament-surveys",
+    "homepage": "https://github.com/elmudometal/filament-surveys",
     "support": {
-        "issues": "https://github.com/elmudodev/filament-surveys/issues",
-        "source": "https://github.com/elmudodev/filament-surveys"
+        "issues": "https://github.com/elmudometal/filament-surveys/issues",
+        "source": "https://github.com/elmudometal/filament-surveys"
     },
     "license": "MIT",
     "authors": [

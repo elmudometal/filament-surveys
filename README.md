@@ -1,9 +1,9 @@
 # This is my package filament-surveys
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/elmudodev/filament-surveys.svg?style=flat-square)](https://packagist.org/packages/elmudodev/filament-surveys)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/elmudodev/filament-surveys/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/elmudodev/filament-surveys/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/elmudodev/filament-surveys/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/elmudodev/filament-surveys/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/elmudodev/filament-surveys.svg?style=flat-square)](https://packagist.org/packages/elmudodev/filament-surveys)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/elmudo-dev/filament-surveys.svg?style=flat-square)](https://packagist.org/packages/elmudo-dev/filament-surveys)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/elmudo-dev/filament-surveys/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/elmudometal/filament-surveys/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/elmudo-dev/filament-surveys/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/elmudometal/filament-surveys/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/elmudo-dev/filament-surveys.svg?style=flat-square)](https://packagist.org/packages/elmudo-dev/filament-surveys)
 
 
 
@@ -14,7 +14,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via composer:
 
 ```bash
-composer require elmudodev/filament-surveys
+composer require elmudo-dev/filament-surveys
 ```
 
 You can publish and run the migrations with:

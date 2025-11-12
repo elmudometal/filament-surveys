@@ -38,7 +38,7 @@ class FilamentSurveysServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('elmudodev/filament-surveys');
+                    ->askToStarRepoOnGitHub('elmudo-dev/filament-surveys');
             });
 
         $configFileName = $package->shortName();
@@ -93,7 +93,7 @@ class FilamentSurveysServiceProvider extends PackageServiceProvider
 
     protected function getAssetPackageName(): ?string
     {
-        return 'elmudodev/filament-surveys';
+        return 'elmudo-dev/filament-surveys';
     }
 
     /**
