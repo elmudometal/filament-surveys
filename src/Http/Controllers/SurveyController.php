@@ -65,11 +65,16 @@ class SurveyController
             ]);
 
             foreach ($request->input("question_{$question->id}") as $optionId) {
+                $justify = match ($question->question_type) {
+                    'simple' => $request->input("question_{$question->id}_justify")[$question->id] ?? null,
+                    default => $request->input("question_{$question->id}_justify")[$optionId] ?? null,
+                };
+
                 SurveyResponse::create([
                     'model_type' => config('filament-surveys.model_type'),
                     'model_id' => $model_id,
                     'question_id' => $question->id,
-                    'justify' => $request->input("question_{$question->id}_justify")[$optionId] ?? null,
+                    'justify' => $justify,
                     'option_id' => $optionId,
                 ]);
             }
