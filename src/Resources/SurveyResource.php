@@ -33,14 +33,15 @@ class SurveyResource extends Resource
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('slug')
+                    ->label('identificador (slug)')
+                    ->required()
+                    ->columnSpanFull()
+                    ->hiddenOn('create')
+                    ->maxLength(255),
                 Forms\Components\RichEditor::make('description')
                     ->label('Descripción')
                     ->columnSpanFull(),
-                Forms\Components\Select::make('model_type')
-                    ->label('Modelo Asociado')
-                    ->options(config('filament-surveys.models_enum'))
-                    ->searchable()
-                    ->placeholder('Seleccione un modelo'),
                 Forms\Components\DatePicker::make('start_date')
                     ->label('Fecha Inicio')
                     ->required(),
@@ -52,11 +53,17 @@ class SurveyResource extends Resource
                     ->reorderable()
                     ->live()
                     ->required(),
+                Forms\Components\Select::make('model_type')
+                    ->label('Audiencia')
+                    ->options(config('filament-surveys.models_enum'))
+                    ->searchable()
+                    ->placeholder('Seleccione una adiencia'),
                 Forms\Components\Repeater::make('questions')
                     ->label('Preguntas')
                     ->relationship('questions')
                     ->columnSpanFull()
                     ->columns(2)
+                    ->collapsible()
                     ->schema([
                         Forms\Components\TextInput::make('question_text')
                             ->label('Pregunta')
