@@ -36,6 +36,11 @@ class SurveyResource extends Resource
                 Forms\Components\RichEditor::make('description')
                     ->label('Descripción')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('model_type')
+                    ->label('Modelo Asociado')
+                    ->options(config('filament-surveys.models_enum'))
+                    ->searchable()
+                    ->placeholder('Seleccione un modelo'),
                 Forms\Components\DatePicker::make('start_date')
                     ->label('Fecha Inicio')
                     ->required(),

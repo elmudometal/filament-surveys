@@ -17,6 +17,7 @@ class Survey extends Model
         'description',
         'start_date',
         'end_date',
+        'model_type',
     ];
 
     /**

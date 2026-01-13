@@ -40,15 +40,53 @@ This is the contents of the published config file:
 
 ```php
 return [
+    // Prefijo para las rutas públicas (participantes)
+    'public_prefix' => 'survey',
+
+    // Remitente opcional para correos de invitación
+    'invite_mail_from' => env('SURVEYS_MAIL_FROM', null),
+
+    // Cola opcional para encolar los correos de invitación
+    'invite_queue' => env('SURVEYS_INVITE_QUEUE', null),
+
+    // Longitud del enlace único para participantes
+    'link_length' => 32,
+
+    /**
+     * Enum que contiene los modelos disponibles para asociar a las encuestas.
+     * El enum debe implementar un método cases() que retorne los modelos.
+     * Si usas Filament, puedes simplemente pasar la clase del Enum.
+     */
+    'models_enum' => null,
+
+    'model_type' => 'App\Models\Survey',
 ];
 ```
 
 ## Usage
 
+### Asociación de Modelos mediante Enum
+
+Puedes configurar un Enum para listar los modelos que pueden tener encuestas asociadas. Esto permite seleccionar el modelo directamente desde el administrador de Filament al crear una encuesta.
+
+1. Crea un Enum que implemente las opciones:
+
 ```php
-$filamentSurveys = new ElmudoDev\FilamentSurveys();
-echo $filamentSurveys->echoPhrase('Hello, ElmudoDev!');
+namespace App\Enums;
+
+enum SurveyModels: string {
+    case Course = \App\Models\Course::class;
+    case Event = \App\Models\Event::class;
+}
 ```
+
+2. Configura el Enum en `config/filament-surveys.php`:
+
+```php
+'models_enum' => \App\Enums\SurveyModels::class,
+```
+
+Al hacer esto, en el formulario de creación de encuestas aparecerá un selector para elegir a qué modelo pertenece la encuesta. El sistema utilizará este valor para filtrar y guardar las respuestas.
 
 ## Testing
 

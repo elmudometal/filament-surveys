@@ -45,8 +45,10 @@ class SurveyController
 
     public function showSurvey(Survey $survey, $model_id): View | RedirectResponse
     {
+        $modelType = $survey->model_type ?? config('filament-surveys.model_type');
+
         if (SurveyResponse::query()
-            ->where('model_type', config('filament-surveys.model_type'))
+            ->where('model_type', $modelType)
             ->where('model_id', $model_id)->exists()) {
             return redirect()->route('survey.thanks');
         }
@@ -56,6 +58,8 @@ class SurveyController
 
     public function submitSurvey(SubmitSurveyResponseRequest $request, Survey $survey, $model_id): RedirectResponse
     {
+        $modelType = $survey->model_type ?? config('filament-surveys.model_type');
+
         foreach ($survey->questions as $question) {
             $rules = $question->is_required ? 'required' : 'nullable';
             $rules .= $question->question_type == 'single_choice' ? '|array|size:1' : '|array';
@@ -71,7 +75,7 @@ class SurveyController
                 };
 
                 SurveyResponse::create([
-                    'model_type' => config('filament-surveys.model_type'),
+                    'model_type' => $modelType,
                     'model_id' => $model_id,
                     'question_id' => $question->id,
                     'justify' => $justify,

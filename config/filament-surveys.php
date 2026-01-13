@@ -13,5 +13,11 @@ return [
     // Longitud del enlace único para participantes
     'link_length' => 32,
 
+    /**
+     * Enum que contiene los modelos disponibles para asociar a las encuestas.
+     * El enum debe implementar un método cases() que retorne los modelos.
+     */
+    'models_enum' => null,
+
     'model_type' => 'App\Models\Survey',
 ];
