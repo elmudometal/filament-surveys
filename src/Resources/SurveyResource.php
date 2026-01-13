@@ -57,7 +57,8 @@ class SurveyResource extends Resource
                     ->label('Audiencia')
                     ->options(config('filament-surveys.models_enum'))
                     ->searchable()
-                    ->placeholder('Seleccione una adiencia'),
+                    ->required()
+                    ->placeholder('Seleccione una audiencia'),
                 Forms\Components\Repeater::make('questions')
                     ->label('Preguntas')
                     ->relationship('questions')
@@ -138,6 +139,10 @@ class SurveyResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título'),
+                Tables\Columns\TextColumn::make('model_type')
+                    ->formatStateUsing(fn (string $state) => config('filament-surveys.models_enum')::from($state))
+                    ->badge()
+                    ->label('Audiencia'),
                 Tables\Columns\TextColumn::make('start_date')
                     ->label('Fecha Inicio'),
                 Tables\Columns\TextColumn::make('end_date')
