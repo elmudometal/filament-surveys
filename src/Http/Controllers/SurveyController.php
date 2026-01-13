@@ -70,8 +70,8 @@ class SurveyController
 
             foreach ($request->input("question_{$question->id}") as $optionId) {
                 $justify = match ($question->question_type) {
-                    'simple' => $request->input("question_{$question->id}_justify")[$question->id] ?? null,
-                    default => $request->input("question_{$question->id}_justify")[$optionId] ?? null,
+                    'free_text' => $request->input("question_{$question->id}_justify")[$optionId] ?? null,
+                    default => $request->input("question_{$question->id}_justify")[$question->id] ?? null,
                 };
 
                 SurveyResponse::create([
