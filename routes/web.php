@@ -15,7 +15,8 @@ Route::group([
         ->name('fill')
         ->missing(function () {
             return Redirect::route('survey.not_available');
-        });
+        })
+        ->middleware('signed');
 
     Route::post('{survey:slug}/{model_id}/submit', [SurveyController::class, 'submitSurvey'])
         ->name('submit');
