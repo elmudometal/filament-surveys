@@ -13,6 +13,13 @@ class SurveyOption extends Model
         'option_justify',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'option_justify' => 'boolean',
+        ];
+    }
+
     /**
      * @return BelongsTo<SurveyQuestion, $this>
      */

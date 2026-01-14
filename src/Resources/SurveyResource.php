@@ -88,25 +88,25 @@ class SurveyResource extends Resource
                                 // Si es una nueva pregunta (no editada)
                                 $defaultOptions = match ($state) {
                                     'simple' => [
-                                        ['option_text' => 'Bueno'],
+                                        ['option_text' => 'Bueno', 'option_justify' => false],
                                         ['option_text' => 'Regular', 'option_justify' => true],
                                         ['option_text' => 'Malo', 'option_justify' => true],
                                     ],
                                     'score' => [
-                                        ['option_text' => '1'],
-                                        ['option_text' => '2'],
-                                        ['option_text' => '3'],
-                                        ['option_text' => '4'],
-                                        ['option_text' => '5'],
-                                        ['option_text' => '6'],
-                                        ['option_text' => '7'],
+                                        ['option_text' => '1', 'option_justify' => false],
+                                        ['option_text' => '2', 'option_justify' => false],
+                                        ['option_text' => '3', 'option_justify' => false],
+                                        ['option_text' => '4', 'option_justify' => false],
+                                        ['option_text' => '5', 'option_justify' => false],
+                                        ['option_text' => '6', 'option_justify' => false],
+                                        ['option_text' => '7', 'option_justify' => false],
                                     ],
                                     'boolean' => [
-                                        ['option_text' => 'Si'],
-                                        ['option_text' => 'No'],
+                                        ['option_text' => 'Si', 'option_justify' => false],
+                                        ['option_text' => 'No', 'option_justify' => false],
                                     ],
                                     'single_choice', 'multiple_choice', 'free_text' => [
-                                        ['option_text' => ''],
+                                        ['option_text' => '', 'option_justify' => false],
                                     ],
                                     default => [],
                                 };
@@ -134,6 +134,7 @@ class SurveyResource extends Resource
                                     ->label('Justificar')
                                     ->inline(false)
                                     ->columnSpan(1)
+                                    ->default(false)
                                     ->onColor('success')
                                     ->offColor('danger'),
                             ]),
