@@ -135,8 +135,7 @@ class SurveyResource extends Resource
                                     ->inline(false)
                                     ->columnSpan(1)
                                     ->onColor('success')
-                                    ->offColor('danger')
-                                    ->required(),
+                                    ->offColor('danger'),
                             ]),
                     ]),
             ]);
