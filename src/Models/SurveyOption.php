@@ -10,6 +10,7 @@ class SurveyOption extends Model
     protected $fillable = [
         'question_id',
         'option_text',
+        'option_justify',
     ];
 
     /**

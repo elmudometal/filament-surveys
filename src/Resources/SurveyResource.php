@@ -89,8 +89,8 @@ class SurveyResource extends Resource
                                 $defaultOptions = match ($state) {
                                     'simple' => [
                                         ['option_text' => 'Bueno'],
-                                        ['option_text' => 'Regular'],
-                                        ['option_text' => 'Malo'],
+                                        ['option_text' => 'Regular', 'option_justify' => true],
+                                        ['option_text' => 'Malo', 'option_justify' => true],
                                     ],
                                     'score' => [
                                         ['option_text' => '1'],
@@ -121,12 +121,21 @@ class SurveyResource extends Resource
                             ->default(true)
                             ->required(),
                         Forms\Components\Repeater::make('options')
+                            ->columns(3)
                             ->columnSpan(2)
                             ->label('Opciones')
                             ->relationship('options')
                             ->schema([
                                 Forms\Components\TextInput::make('option_text')
                                     ->label('Texto de la Opción')
+                                    ->columnSpan(2)
+                                    ->required(),
+                                Forms\Components\Toggle::make('option_justify')
+                                    ->label('Justificar')
+                                    ->inline(false)
+                                    ->columnSpan(1)
+                                    ->onColor('success')
+                                    ->offColor('danger')
                                     ->required(),
                             ]),
                     ]),
