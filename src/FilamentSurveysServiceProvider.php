@@ -154,6 +154,7 @@ class FilamentSurveysServiceProvider extends PackageServiceProvider
             'create_survey_participants_table',
             'create_survey_responses_table',
             'add_model_type_to_surveys_table',
+            'add_option_justify_to_survey_options_table',
         ];
     }
 }
