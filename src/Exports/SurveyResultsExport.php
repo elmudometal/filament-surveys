@@ -4,6 +4,7 @@ namespace ElmudoDev\FilamentSurveys\Exports;
 
 use Carbon\Carbon;
 use ElmudoDev\FilamentSurveys\Models\SurveyResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -21,7 +22,14 @@ class SurveyResultsExport implements FromCollection, ShouldAutoSize, WithHeading
      */
     public function collection()
     {
-        return SurveyResponse::query()->with(['question', 'question.survey', 'option'])->get();
+        $surveyId = $this->surveyId;
+
+        return SurveyResponse::query()
+            ->whereHas('question', function (Builder $query) use ($surveyId) {
+                $query->where('survey_id', $surveyId);
+            })
+            ->with(['question', 'question.survey', 'option'])
+            ->get();
     }
 
     /**
