@@ -60,6 +60,12 @@ class SurveyController
     {
         $modelType = $survey->model_type ?? config('filament-surveys.model_type');
 
+        if (SurveyResponse::query()
+            ->where('model_type', $modelType)
+            ->where('model_id', $model_id)->exists()) {
+            return redirect()->route('survey.thanks');
+        }
+
         foreach ($survey->questions as $question) {
             $rules = $question->is_required ? 'required' : 'nullable';
             $rules .= $question->question_type == 'single_choice' ? '|array|size:1' : '|array';
