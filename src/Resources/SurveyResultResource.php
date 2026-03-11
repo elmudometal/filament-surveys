@@ -4,11 +4,15 @@ namespace ElmudoDev\FilamentSurveys\Resources;
 
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Models\SurveyResponse;
+use ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages\ManageSurveyResults;
 use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -55,7 +59,7 @@ class SurveyResultResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                \Filament\Tables\Filters\SelectFilter::make('survey_id')
+                SelectFilter::make('survey_id')
                     ->label('Filtrar por Encuesta')
                     ->columnSpan(2)
                     ->options(Survey::pluck('title', 'id'))
@@ -67,7 +71,7 @@ class SurveyResultResource extends Resource
                         return $query;
                     }),
 
-                \Filament\Tables\Filters\Filter::make('created_at')
+                Filter::make('created_at')
                     ->columns(2)
                     ->columnSpan(2)
                     ->form([
@@ -93,7 +97,7 @@ class SurveyResultResource extends Resource
                     }),
             ])
             ->bulkActions([
-                \Filament\Tables\Actions\BulkAction::make('Exportar Resultados')
+                BulkAction::make('Exportar Resultados')
                     ->icon('heroicon-o-document-arrow-down')
                     ->action(function ($records) {
                         // Si hay registros seleccionados, tomar la primera encuesta
@@ -110,7 +114,7 @@ class SurveyResultResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages\ManageSurveyResults::route('/'),
+            'index' => ManageSurveyResults::route('/'),
         ];
     }
 

@@ -5,6 +5,7 @@ namespace ElmudoDev\FilamentSurveys\Exports;
 use Carbon\Carbon;
 use ElmudoDev\FilamentSurveys\Models\SurveyResponse;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -18,7 +19,7 @@ class SurveyResultsExport implements FromCollection, ShouldAutoSize, WithHeading
     public function __construct(protected int $surveyId) {}
 
     /**
-     * @return \Illuminate\Support\Collection<int, SurveyResponse>
+     * @return Collection<int, SurveyResponse>
      */
     public function collection()
     {
