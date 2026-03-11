@@ -8,6 +8,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -56,28 +57,29 @@ class SurveyResultResource extends Resource
             ->filters([
                 \Filament\Tables\Filters\SelectFilter::make('survey_id')
                     ->label('Filtrar por Encuesta')
+                    ->columnSpan(2)
                     ->options(Survey::pluck('title', 'id'))
                     ->query(function (Builder $query, array $data) {
                         if (! empty($data['value'])) {
-                            return $query->whereHas('participant.survey', function ($q) use ($data) {
-                                $q->where('surveys.id', $data['value']);
-                            });
+                            return $query->where('survey_id', $data['value']);
                         }
 
                         return $query;
                     }),
 
                 \Filament\Tables\Filters\Filter::make('created_at')
+                    ->columns(2)
+                    ->columnSpan(2)
                     ->form([
                         DatePicker::make('from_date')->label('Desde'),
                         DatePicker::make('to_date')->label('Hasta'),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query
-                            ->when($data['from_date'] ?? null, fn ($q) => $q->whereDate('created_at', '>=', $data['from_date']))
-                            ->when($data['to_date'] ?? null, fn ($q) => $q->whereDate('created_at', '<=', $data['to_date']));
+                            ->when($data['from_date'] ?? null, fn ($q) => $q->whereDate('survey_responses.created_at', '>=', $data['from_date']))
+                            ->when($data['to_date'] ?? null, fn ($q) => $q->whereDate('survey_responses.created_at', '<=', $data['to_date']));
                     }),
-            ])
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Action::make('Exportar Detalle')
                     ->icon('heroicon-o-document-arrow-down')
@@ -115,5 +117,15 @@ class SurveyResultResource extends Resource
     public static function getNavigationGroup(): ?string
     {
         return __('filament-surveys::filament-surveys.nav.group');
+    }
+
+    /**
+     * @return Builder<SurveyResponse>
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->select('survey_responses.*', 'survey_questions.survey_id as survey_id')
+            ->join('survey_questions', 'survey_responses.question_id', '=', 'survey_questions.id');
     }
 }
