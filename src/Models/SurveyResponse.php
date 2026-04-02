@@ -5,6 +5,21 @@ namespace ElmudoDev\FilamentSurveys\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string $model_type
+ * @property int $model_id
+ * @property int $question_id
+ * @property int $option_id
+ * @property string|null $justify
+ * @property int $survey_participant_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Model $model
+ * @property-read SurveyParticipant $participant
+ * @property-read SurveyQuestion $question
+ * @property-read SurveyOption $option
+ */
 class SurveyResponse extends Model
 {
     protected $fillable = [
@@ -16,7 +31,7 @@ class SurveyResponse extends Model
     ];
 
     /**
-     * @return BelongsTo<SurveyParticipant, $this>
+     * @return BelongsTo<SurveyParticipant, SurveyResponse>
      */
     public function participant(): BelongsTo
     {
@@ -24,7 +39,7 @@ class SurveyResponse extends Model
     }
 
     /**
-     * @return BelongsTo<SurveyQuestion, $this>
+     * @return BelongsTo<SurveyQuestion, SurveyResponse>
      */
     public function question(): BelongsTo
     {
@@ -32,7 +47,7 @@ class SurveyResponse extends Model
     }
 
     /**
-     * @return BelongsTo<SurveyOption, $this>
+     * @return BelongsTo<SurveyOption, SurveyResponse>
      */
     public function option(): BelongsTo
     {

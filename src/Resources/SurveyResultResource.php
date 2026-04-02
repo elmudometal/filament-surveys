@@ -64,13 +64,9 @@ class SurveyResultResource extends Resource
                     ->columnSpan(2)
                     ->options(Survey::pluck('title', 'id'))
                     ->query(function (Builder $query, array $data) {
-                        if (! empty($data['value'])) {
-                            return $query->where('survey_id', $data['value']);
-                        }
-
-                        return $query;
+                        return $query
+                            ->when($data['value'], fn ($q, string $survey_id)  => $q->where('survey_id', $survey_id));
                     }),
-
                 Filter::make('created_at')
                     ->columns(2)
                     ->columnSpan(2)

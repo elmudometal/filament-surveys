@@ -4,9 +4,22 @@ namespace ElmudoDev\FilamentSurveys\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property array|null $sections
+ * @property string|null $description
+ * @property Carbon $start_date
+ * @property Carbon $end_date
+ * @property string|null $model_type
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 class Survey extends Model
 {
     use HasSlug;
@@ -46,7 +59,7 @@ class Survey extends Model
     }
 
     /**
-     * @return HasMany<SurveyQuestion, $this>
+     * @return HasMany<SurveyQuestion>
      */
     public function questions(): HasMany
     {
