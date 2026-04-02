@@ -2,9 +2,11 @@
 
 namespace ElmudoDev\FilamentSurveys\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
@@ -14,11 +16,11 @@ use Illuminate\Support\Str;
  * @property string $email
  * @property string $unique_link
  * @property bool $completed
- * @property \Illuminate\Support\Carbon|null $completed_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $completed_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read Survey $survey
- * @property-read \Illuminate\Database\Eloquent\Collection<int, SurveyResponse> $responses
+ * @property-read Collection<int, SurveyResponse> $responses
  */
 class SurveyParticipant extends Model
 {

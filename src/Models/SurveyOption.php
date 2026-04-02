@@ -4,14 +4,15 @@ namespace ElmudoDev\FilamentSurveys\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $question_id
  * @property string $option_text
  * @property bool $option_justify
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read SurveyQuestion $question
  */
 class SurveyOption extends Model
