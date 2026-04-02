@@ -65,7 +65,7 @@ class SurveyResultResource extends Resource
                     ->options(Survey::pluck('title', 'id'))
                     ->query(function (Builder $query, array $data) {
                         return $query
-                            ->when($data['value'], fn ($q, string $survey_id)  => $q->where('survey_id', $survey_id));
+                            ->when($data['value'], fn ($q, string $survey_id) => $q->where('survey_id', $survey_id));
                     }),
                 Filter::make('created_at')
                     ->columns(2)
