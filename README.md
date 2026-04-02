@@ -1,4 +1,6 @@
-# This is my package filament-surveys
+[# This is my package filament-surveys]
+
+Compatibility: This v1 release of the package is intended for Filament v3.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/elmudo-dev/filament-surveys.svg?style=flat-square)](https://packagist.org/packages/elmudo-dev/filament-surveys)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/elmudo-dev/filament-surveys/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/elmudometal/filament-surveys/actions?query=workflow%3Arun-tests+branch%3Amain)
@@ -10,6 +12,8 @@
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
 ## Installation
+
+Compatibility note: This v1 branch/release of the package is intended to work with Filament v3. If you are using a different Filament version (for example v4 or v5), consult the main branch.
 
 You can install the package via composer:
 
