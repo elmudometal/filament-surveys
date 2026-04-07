@@ -6,6 +6,9 @@ use ElmudoDev\FilamentSurveys\Models\SurveyOption;
 use ElmudoDev\FilamentSurveys\Models\SurveyQuestion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<SurveyOption>
+ */
 class SurveyOptionFactory extends Factory
 {
     protected $model = SurveyOption::class;

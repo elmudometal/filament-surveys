@@ -2,6 +2,7 @@
 
 namespace ElmudoDev\FilamentSurveys\Models;
 
+use ElmudoDev\FilamentSurveys\Database\Factories\SurveyParticipantFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,7 @@ use Ramsey\Uuid\Uuid;
  */
 class SurveyParticipant extends Model
 {
+    /** @use HasFactory<SurveyParticipantFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -44,7 +46,7 @@ class SurveyParticipant extends Model
     }
 
     /**
-     * @return BelongsTo<Survey, SurveyParticipant>
+     * @return BelongsTo<Survey, $this>
      */
     public function survey(): BelongsTo
     {
@@ -52,10 +54,15 @@ class SurveyParticipant extends Model
     }
 
     /**
-     * @return HasMany<SurveyResponse>
+     * @return HasMany<SurveyResponse, $this>
      */
     public function responses(): HasMany
     {
         return $this->hasMany(SurveyResponse::class);
+    }
+
+    protected static function newFactory(): SurveyParticipantFactory
+    {
+        return SurveyParticipantFactory::new();
     }
 }

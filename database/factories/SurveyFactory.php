@@ -5,6 +5,9 @@ namespace ElmudoDev\FilamentSurveys\Database\Factories;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Survey>
+ */
 class SurveyFactory extends Factory
 {
     protected $model = Survey::class;

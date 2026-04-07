@@ -36,15 +36,15 @@ it('can invite participants and sends emails', function () {
 it('shows the survey page with signed url', function () {
     $survey = Survey::factory()->create();
     $participant = SurveyParticipant::factory()->create(['survey_id' => $survey->id]);
-    $url = URL::signedRoute('survey.fill', ['survey' => $survey->slug, 'model_id' => $participant->unique_link]);
+    $url = URL::signedRoute('survey.fill', ['survey' => $survey->slug, 'model_id' => $participant->id]);
 
     $response = $this->get($url);
 
     $response->assertStatus(200);
     $response->assertViewIs('filament-surveys::survey.fill');
     $response->assertViewHas('survey', $survey);
-    $response->assertViewHas('participant', function ($viewParticipant) use ($participant) {
-        return $viewParticipant->id === $participant->id;
+    $response->assertViewHas('model_id', function ($model_id) use ($participant) {
+        return $model_id == $participant->id;
     });
 });
 
