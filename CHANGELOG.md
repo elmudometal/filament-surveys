@@ -2,6 +2,10 @@
 
 All notable changes to `filament-surveys` will be documented in this file.
 
+## v2.0.2 - 2026-04-07
+
+Update resource action syntax and component imports for Filament v4
+
 ## v2.0.1 - 2026-04-07
 
 Update resource action syntax and component imports for Filament v4
