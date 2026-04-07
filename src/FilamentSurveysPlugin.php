@@ -2,6 +2,9 @@
 
 namespace ElmudoDev\FilamentSurveys;
 
+use ElmudoDev\FilamentSurveys\Resources\SurveyParticipantResource;
+use ElmudoDev\FilamentSurveys\Resources\SurveyResource;
+use ElmudoDev\FilamentSurveys\Resources\SurveyResultResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
@@ -15,9 +18,9 @@ class FilamentSurveysPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $panel->resources([
-            Resources\SurveyResource::class,
-            Resources\SurveyResultResource::class,
-            Resources\SurveyParticipantResource::class,
+            SurveyResource::class,
+            SurveyResultResource::class,
+            SurveyParticipantResource::class,
         ]);
     }
 

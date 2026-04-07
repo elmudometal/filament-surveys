@@ -17,40 +17,64 @@
     <p>{!! $survey->description !!}</p>
 @endif
 
-<form method="POST" action="{{ route('survey.submit', $participant->unique_link) }}">
-    @csrf
+<section class="position-relative pt-0">
+    <div class="container">
+        <form method="POST" action="{{ route('survey.submit', [$survey, $model_id]) }}" class="row">
+            @csrf
+            <div class="mb-4">
+                <h2>{{ $survey->title }}</h2>
+                @if ($survey->description)
+                    <p class="lead">{!! $survey->description !!}</p>
+                @endif
+            </div>
 
-    @foreach($survey->questions as $question)
-        <div class="question">
-            <label><strong>{{ $question->question_text }}</strong></label>
+            @foreach ($survey->questions->groupBy('question_section') as $section_questions)
+                <h3 class="mb-4">Sección {{ $loop->iteration }}. {{ $section_questions->first()->question_section }}</h3>
+                @foreach ($section_questions as $question)
+                    <div class="mb-3 question question-{{ $question->question_type }}">
+                        <h4 class="mb-3">{{ $question->question_text }}</h4>
+                        @if ($question->question_type === 'free_text')
+                            <div class="form-group">
+                                @foreach ($question->options as $option)
+                                    <input type="hidden" name="question_{{ $question->id }}[]" value="{{ $option->id }}" @required ($question->is_required) />
+                                    <textarea class="form-control" name="question_{{ $question->id }}_justify[{{ $option->id }}]" rows="3" @required ($question->is_required)></textarea>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="form-check">
+                                @foreach ($question->options as $option)
+                                    <label class="form-check-label">
+                                        <input
+                                                class="form-check-input {{ $option->option_justify ? 'option-justify' : '' }}"
+                                                type="{{ $question->question_type === 'multiple_choice' ? 'checkbox' : 'radio'}}"
+                                                name="question_{{ $question->id }}[]"
+                                                value="{{ $option->id }}"
+                                                @required ($question->is_required)
+                                        />
+                                        {{ $option->option_text }} </label
+                                    ><br />
+                                @endforeach
+                            </div>
+                            <textarea
+                                    placeholder="Por favor, cuéntanos por qué."
+                                    class="form-control mt-2"
+                                    style="display: none"
+                                    name="question_{{ $question->id }}_justify[{{ $question->id }}]"
+                                    rows="3"
+                            ></textarea>
+                        @endif
 
-            @if($question->question_type === 'single_choice')
-                <div>
-                    @foreach($question->options as $option)
-                        <label>
-                            <input type="radio" name="question_{{ $question->id }}[]" value="{{ $option->id }}">
-                            {{ $option->option_text }}
-                        </label><br>
-                    @endforeach
-                </div>
-            @else
-                <div>
-                    @foreach($question->options as $option)
-                        <label>
-                            <input type="checkbox" name="question_{{ $question->id }}[]" value="{{ $option->id }}">
-                            {{ $option->option_text }}
-                        </label><br>
-                    @endforeach
-                </div>
-            @endif
-
-            @error('question_'.$question->id)
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
-    @endforeach
-
-    <button type="submit">Enviar</button>
-</form>
+                        @error ('question_' . $question->id)
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endforeach
+            @endforeach
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">Enviar mi opinión</button>
+            </div>
+        </form>
+    </div>
+</section>
 </body>
 </html>

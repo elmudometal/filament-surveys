@@ -2,17 +2,21 @@
 
 namespace ElmudoDev\FilamentSurveys\Resources;
 
+use BackedEnum;
 use ElmudoDev\FilamentSurveys\Mail\SurveyInvitationMail;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Models\SurveyParticipant;
 use ElmudoDev\FilamentSurveys\Resources\SurveyParticipantResource\Pages;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Mail;
@@ -21,7 +25,7 @@ class SurveyParticipantResource extends Resource
 {
     protected static ?string $model = SurveyParticipant::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Participantes';
 
@@ -33,9 +37,9 @@ class SurveyParticipantResource extends Resource
 
     protected static ?string $slug = 'participantes';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Select::make('survey_id')
                     ->relationship('survey', 'title')
@@ -69,12 +73,10 @@ class SurveyParticipantResource extends Resource
                     ->label('Correo Electrónico')
                     ->searchable(),
 
-                BadgeColumn::make('completed')
+                TextColumn::make('completed')
                     ->label('Estado')
-                    ->colors([
-                        'success' => true,
-                        'danger' => false,
-                    ])
+                    ->badge()
+                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
                     ->formatStateUsing(fn (bool $state): string => $state ? 'Completada' : 'Pendiente'),
 
                 TextColumn::make('completed_at')
@@ -99,9 +101,8 @@ class SurveyParticipantResource extends Resource
                     ])
                     ->label('Estado de Participación'),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-
+            ->recordActions([
+                EditAction::make(),
                 Action::make('Reenviar Invitación')
                     ->icon('heroicon-o-paper-airplane')
                     ->action(function (SurveyParticipant $record) {
@@ -119,11 +120,11 @@ class SurveyParticipantResource extends Resource
                     })
                     ->visible(fn (SurveyParticipant $record) => ! $record->completed),
 
-                Tables\Actions\DeleteAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

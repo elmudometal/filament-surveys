@@ -2,6 +2,8 @@
 
 namespace ElmudoDev\FilamentSurveys\Models;
 
+use ElmudoDev\FilamentSurveys\Database\Factories\SurveyFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -12,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property array|null $sections
+ * @property array<string>|null $sections
  * @property string|null $description
  * @property Carbon $start_date
  * @property Carbon $end_date
@@ -22,6 +24,9 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Survey extends Model
 {
+    /** @use HasFactory<SurveyFactory> */
+    use HasFactory;
+
     use HasSlug;
 
     protected $fillable = [
@@ -59,10 +64,15 @@ class Survey extends Model
     }
 
     /**
-     * @return HasMany<SurveyQuestion>
+     * @return HasMany<SurveyQuestion, $this>
      */
     public function questions(): HasMany
     {
         return $this->hasMany(SurveyQuestion::class);
+    }
+
+    protected static function newFactory(): SurveyFactory
+    {
+        return SurveyFactory::new();
     }
 }

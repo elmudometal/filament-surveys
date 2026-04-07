@@ -2,6 +2,8 @@
 
 namespace ElmudoDev\FilamentSurveys\Models;
 
+use ElmudoDev\FilamentSurveys\Database\Factories\SurveyResponseFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -23,6 +25,9 @@ use Illuminate\Support\Carbon;
  */
 class SurveyResponse extends Model
 {
+    /** @use HasFactory<SurveyResponseFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'model_type',
         'model_id',
@@ -32,7 +37,7 @@ class SurveyResponse extends Model
     ];
 
     /**
-     * @return BelongsTo<SurveyParticipant, SurveyResponse>
+     * @return BelongsTo<SurveyParticipant, $this>
      */
     public function participant(): BelongsTo
     {
@@ -40,7 +45,7 @@ class SurveyResponse extends Model
     }
 
     /**
-     * @return BelongsTo<SurveyQuestion, SurveyResponse>
+     * @return BelongsTo<SurveyQuestion, $this>
      */
     public function question(): BelongsTo
     {
@@ -48,10 +53,15 @@ class SurveyResponse extends Model
     }
 
     /**
-     * @return BelongsTo<SurveyOption, SurveyResponse>
+     * @return BelongsTo<SurveyOption, $this>
      */
     public function option(): BelongsTo
     {
         return $this->belongsTo(SurveyOption::class);
+    }
+
+    protected static function newFactory(): SurveyResponseFactory
+    {
+        return SurveyResponseFactory::new();
     }
 }

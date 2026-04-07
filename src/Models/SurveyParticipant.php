@@ -2,13 +2,14 @@
 
 namespace ElmudoDev\FilamentSurveys\Models;
 
+use ElmudoDev\FilamentSurveys\Database\Factories\SurveyParticipantFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @property int $id
@@ -24,6 +25,9 @@ use Illuminate\Support\Str;
  */
 class SurveyParticipant extends Model
 {
+    /** @use HasFactory<SurveyParticipantFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'survey_id',
         'email',
@@ -34,16 +38,15 @@ class SurveyParticipant extends Model
 
     public static function generateUniqueLink(): string
     {
-        $len = Config::int('filament-surveys.link_length', 32);
         do {
-            $link = Str::random($len);
+            $link = Uuid::uuid4();
         } while (self::where('unique_link', $link)->exists());
 
         return $link;
     }
 
     /**
-     * @return BelongsTo<Survey, SurveyParticipant>
+     * @return BelongsTo<Survey, $this>
      */
     public function survey(): BelongsTo
     {
@@ -51,10 +54,15 @@ class SurveyParticipant extends Model
     }
 
     /**
-     * @return HasMany<SurveyResponse>
+     * @return HasMany<SurveyResponse, $this>
      */
     public function responses(): HasMany
     {
         return $this->hasMany(SurveyResponse::class);
+    }
+
+    protected static function newFactory(): SurveyParticipantFactory
+    {
+        return SurveyParticipantFactory::new();
     }
 }
