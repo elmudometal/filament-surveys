@@ -7,10 +7,10 @@ use ElmudoDev\FilamentSurveys\Exports\SurveyResultsExport;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Models\SurveyResponse;
 use ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages\ManageSurveyResults;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
@@ -72,7 +72,7 @@ class SurveyResultResource extends Resource
                 Filter::make('created_at')
                     ->columns(2)
                     ->columnSpan(2)
-                    ->form([
+                    ->schema([
                         DatePicker::make('from_date')->label('Desde'),
                         DatePicker::make('to_date')->label('Hasta'),
                     ])
@@ -82,7 +82,7 @@ class SurveyResultResource extends Resource
                             ->when($data['to_date'] ?? null, fn ($q) => $q->whereDate('survey_responses.created_at', '<=', $data['to_date']));
                     }),
             ], layout: FiltersLayout::AboveContent)
-            ->actions([
+            ->recordActions([
                 Action::make('Exportar Detalle')
                     ->icon('heroicon-o-document-arrow-down')
                     ->action(function ($record) {
@@ -94,7 +94,7 @@ class SurveyResultResource extends Resource
                         );
                     }),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkAction::make('Exportar Resultados')
                     ->icon('heroicon-o-document-arrow-down')
                     ->action(function ($records) {

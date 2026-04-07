@@ -5,9 +5,20 @@ namespace ElmudoDev\FilamentSurveys\Resources;
 use BackedEnum;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Resources\SurveyResource\Pages;
-use Filament\Forms;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class SurveyResource extends Resource
@@ -28,52 +39,52 @@ class SurveyResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\TextInput::make('title')
+                TextInput::make('title')
                     ->label('Título')
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
+                TextInput::make('slug')
                     ->label('identificador (slug)')
                     ->required()
                     ->columnSpanFull()
                     ->hiddenOn('create')
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('description')
+                RichEditor::make('description')
                     ->label('Descripción')
                     ->columnSpanFull(),
-                Forms\Components\DatePicker::make('start_date')
+                DatePicker::make('start_date')
                     ->label('Fecha Inicio')
                     ->required(),
-                Forms\Components\DatePicker::make('end_date')
+                DatePicker::make('end_date')
                     ->label('Fecha Fin')
                     ->required(),
-                Forms\Components\TagsInput::make('sections')
+                TagsInput::make('sections')
                     ->label('Secciones')
                     ->reorderable()
                     ->live()
                     ->required(),
-                Forms\Components\Select::make('model_type')
+                Select::make('model_type')
                     ->label('Audiencia')
                     ->options(config('filament-surveys.models_enum'))
                     ->searchable()
                     ->required()
                     ->placeholder('Seleccione una audiencia'),
-                Forms\Components\Repeater::make('questions')
+                Repeater::make('questions')
                     ->label('Preguntas')
                     ->relationship('questions')
                     ->columnSpanFull()
                     ->columns(2)
                     ->collapsible()
                     ->schema([
-                        Forms\Components\TextInput::make('question_text')
+                        TextInput::make('question_text')
                             ->label('Pregunta')
                             ->required(),
-                        Forms\Components\Select::make('question_section')
+                        Select::make('question_section')
                             ->label('Sección')
                             ->live()
-                            ->options(fn (Forms\Get $get, $state) => $state ? collect($get('../../sections'))->add($state)->mapWithKeys(fn ($v) => [$v => $v]) : collect($get('../../sections'))->mapWithKeys(fn ($v) => [$v => $v])),
-                        Forms\Components\Select::make('question_type')
+                            ->options(fn (Get $get, $state) => $state ? collect($get('../../sections'))->add($state)->mapWithKeys(fn ($v) => [$v => $v]) : collect($get('../../sections'))->mapWithKeys(fn ($v) => [$v => $v])),
+                        Select::make('question_type')
                             ->label('Tipo de Pregunta')
                             ->options([
                                 'single_choice' => 'Opción Única',
@@ -113,24 +124,24 @@ class SurveyResource extends Resource
 
                                 $set('options', $defaultOptions);
                             }),
-                        Forms\Components\Toggle::make('is_required')
+                        Toggle::make('is_required')
                             ->label('Requerido')
                             ->onColor('success')
                             ->offColor('danger')
                             ->inline(false)
                             ->default(true)
                             ->required(),
-                        Forms\Components\Repeater::make('options')
+                        Repeater::make('options')
                             ->columns(3)
                             ->columnSpan(2)
                             ->label('Opciones')
                             ->relationship('options')
                             ->schema([
-                                Forms\Components\TextInput::make('option_text')
+                                TextInput::make('option_text')
                                     ->label('Texto de la Opción')
                                     ->columnSpan(2)
                                     ->required(),
-                                Forms\Components\Toggle::make('option_justify')
+                                Toggle::make('option_justify')
                                     ->label('Justificar')
                                     ->inline(false)
                                     ->columnSpan(1)
@@ -146,17 +157,17 @@ class SurveyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Título'),
-                Tables\Columns\TextColumn::make('model_type')
+                TextColumn::make('model_type')
                     ->formatStateUsing(fn (string $state) => config('filament-surveys.models_enum')::from($state))
                     ->badge()
                     ->label('Audiencia'),
-                Tables\Columns\TextColumn::make('start_date')
+                TextColumn::make('start_date')
                     ->label('Fecha Inicio'),
-                Tables\Columns\TextColumn::make('end_date')
+                TextColumn::make('end_date')
                     ->label('Fecha Fin'),
-                Tables\Columns\TextColumn::make('questions_count')
+                TextColumn::make('questions_count')
                     ->label('Preguntas')
                     ->counts('questions')
                     ->label('Número de Preguntas'),
@@ -164,12 +175,12 @@ class SurveyResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
