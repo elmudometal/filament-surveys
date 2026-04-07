@@ -3,6 +3,7 @@
 namespace ElmudoDev\FilamentSurveys\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,6 +23,8 @@ use Illuminate\Support\Carbon;
  */
 class SurveyQuestion extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'survey_id',
         'question_text',

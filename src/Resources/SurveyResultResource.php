@@ -2,6 +2,8 @@
 
 namespace ElmudoDev\FilamentSurveys\Resources;
 
+use BackedEnum;
+use ElmudoDev\FilamentSurveys\Exports\SurveyResultsExport;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Models\SurveyResponse;
 use ElmudoDev\FilamentSurveys\Resources\SurveyResultResource\Pages\ManageSurveyResults;
@@ -21,7 +23,7 @@ class SurveyResultResource extends Resource
 {
     protected static ?string $model = SurveyResponse::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static ?string $navigationLabel = 'Resultados de Encuestas';
 

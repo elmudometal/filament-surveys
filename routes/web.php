@@ -11,6 +11,9 @@ Route::group([
     Route::view('no-disponible', 'filament-surveys::survey.not_available')
         ->name('not_available');
 
+    Route::post('{survey}/invite', [SurveyController::class, 'inviteParticipants'])
+        ->name('invite');
+
     Route::get('{survey:slug}/{model_id}', [SurveyController::class, 'showSurvey'])
         ->name('fill')
         ->missing(function () {

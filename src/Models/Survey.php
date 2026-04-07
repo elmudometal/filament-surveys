@@ -2,6 +2,7 @@
 
 namespace ElmudoDev\FilamentSurveys\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -22,6 +23,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Survey extends Model
 {
+    use HasFactory;
     use HasSlug;
 
     protected $fillable = [

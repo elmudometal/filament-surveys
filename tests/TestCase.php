@@ -16,7 +16,6 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -33,7 +32,6 @@ class TestCase extends Orchestra
     {
         return [
             ActionsServiceProvider::class,
-            BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
             FilamentServiceProvider::class,
@@ -51,10 +49,21 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('app.key', 'base64:7B5Y9W7h+Q2p8/P0XmY3z1K3eU6T8W3b7Y6Z5X4C3B2=');
+        config()->set('filament-surveys.model_type', 'App\Models\User');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-surveys_table.php.stub';
-        $migration->up();
-        */
+        $migrations = [
+            'create_surveys_table.php.stub',
+            'create_survey_questions_table.php.stub',
+            'create_survey_options_table.php.stub',
+            'create_survey_participants_table.php.stub',
+            'create_survey_responses_table.php.stub',
+            'add_model_type_to_surveys_table.php.stub',
+        ];
+
+        foreach ($migrations as $migrationFile) {
+            $migration = include __DIR__ . '/../database/migrations/' . $migrationFile;
+            $migration->up();
+        }
     }
 }

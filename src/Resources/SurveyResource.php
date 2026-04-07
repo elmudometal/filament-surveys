@@ -2,11 +2,11 @@
 
 namespace ElmudoDev\FilamentSurveys\Resources;
 
+use BackedEnum;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Resources\SurveyResource\Pages;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,7 +14,7 @@ class SurveyResource extends Resource
 {
     protected static ?string $model = Survey::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $modelLabel = 'Encuesta';
 
@@ -24,9 +24,9 @@ class SurveyResource extends Resource
 
     protected static ?string $slug = 'encuestas';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->label('Título')
