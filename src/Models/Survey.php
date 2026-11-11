@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -69,6 +70,35 @@ class Survey extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(SurveyQuestion::class);
+    }
+
+    /**
+     * Duplicate the survey with its questions and options.
+     * Participants and responses are not copied.
+     *
+     * @param  array<string, mixed>  $attributes  Attributes to override (title, start_date, end_date...)
+     */
+    public function duplicate(array $attributes = []): self
+    {
+        return DB::transaction(function () use ($attributes): self {
+            $copy = $this->replicate(['slug']);
+            $copy->fill($attributes);
+            $copy->save();
+
+            foreach ($this->questions()->with('options')->get() as $question) {
+                $newQuestion = $question->replicate();
+                $newQuestion->survey_id = $copy->id;
+                $newQuestion->save();
+
+                foreach ($question->options as $option) {
+                    $newOption = $option->replicate();
+                    $newOption->question_id = $newQuestion->id;
+                    $newOption->save();
+                }
+            }
+
+            return $copy;
+        });
     }
 
     protected static function newFactory(): SurveyFactory

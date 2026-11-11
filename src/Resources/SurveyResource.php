@@ -5,6 +5,7 @@ namespace ElmudoDev\FilamentSurveys\Resources;
 use BackedEnum;
 use ElmudoDev\FilamentSurveys\Models\Survey;
 use ElmudoDev\FilamentSurveys\Resources\SurveyResource\Pages;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -177,6 +178,31 @@ class SurveyResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('duplicate')
+                    ->label('Duplicar')
+                    ->icon('heroicon-o-document-duplicate')
+                    ->color('gray')
+                    ->modalHeading('Duplicar encuesta')
+                    ->modalDescription('Se copiarán las preguntas y opciones. Los participantes y respuestas no se copian.')
+                    ->modalSubmitActionLabel('Duplicar')
+                    ->fillForm(fn (Survey $record): array => [
+                        'title' => $record->title . ' (copia)',
+                    ])
+                    ->schema([
+                        TextInput::make('title')
+                            ->label('Título')
+                            ->required()
+                            ->maxLength(255),
+                        DatePicker::make('start_date')
+                            ->label('Fecha Inicio')
+                            ->required(),
+                        DatePicker::make('end_date')
+                            ->label('Fecha Fin')
+                            ->required()
+                            ->afterOrEqual('start_date'),
+                    ])
+                    ->action(fn (Survey $record, array $data) => $record->duplicate($data))
+                    ->successNotificationTitle('Encuesta duplicada'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
