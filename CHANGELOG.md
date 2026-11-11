@@ -2,6 +2,10 @@
 
 All notable changes to `filament-surveys` will be documented in this file.
 
+## v2.1.1 - 2026-11-11
+
+- Fix the "Duplicar" action failing with `Unknown column 'questions_count'`. `Survey::duplicate()` now copies only real columns.
+
 ## v2.1.0 - 2026-11-11
 
 - Add a "Duplicar" action to the surveys table. It asks for the new title, start date and end date, and copies the survey with its questions and options. Participants and responses are not copied.
