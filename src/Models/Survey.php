@@ -6,6 +6,7 @@ use ElmudoDev\FilamentSurveys\Database\Factories\SurveyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Spatie\Sluggable\HasSlug;
@@ -81,7 +82,10 @@ class Survey extends Model
     public function duplicate(array $attributes = []): self
     {
         return DB::transaction(function () use ($attributes): self {
-            $copy = $this->replicate(['slug']);
+            // Copy only real columns: the record may carry query-only attributes
+            // such as `questions_count` (withCount), which replicate() would keep.
+            $copy = $this->newInstance();
+            $copy->setRawAttributes(Arr::only($this->getAttributes(), $this->getFillable()));
             $copy->fill($attributes);
             $copy->save();
 
