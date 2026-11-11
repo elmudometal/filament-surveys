@@ -92,6 +92,24 @@ enum SurveyModels: string {
 
 Al hacer esto, en el formulario de creación de encuestas aparecerá un selector para elegir a qué modelo pertenece la encuesta. El sistema utilizará este valor para filtrar y guardar las respuestas.
 
+### Duplicar encuestas
+
+En el listado de encuestas, cada fila tiene la acción **Duplicar**. Al usarla se abre un modal que pide el título, la fecha de inicio y la fecha de fin de la nueva encuesta.
+
+La copia incluye la descripción, las secciones, la audiencia y todas las preguntas con sus opciones. Los participantes y las respuestas no se copian, y el slug se genera a partir del nuevo título.
+
+También puedes duplicar una encuesta desde código:
+
+```php
+use ElmudoDev\FilamentSurveys\Models\Survey;
+
+$copy = Survey::find(1)->duplicate([
+    'title' => 'Encuesta de satisfacción 2027',
+    'start_date' => '2027-01-01',
+    'end_date' => '2027-01-31',
+]);
+```
+
 ## Testing
 
 ```bash

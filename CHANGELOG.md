@@ -2,6 +2,11 @@
 
 All notable changes to `filament-surveys` will be documented in this file.
 
+## v2.1.0 - 2026-11-11
+
+- Add a "Duplicar" action to the surveys table. It asks for the new title, start date and end date, and copies the survey with its questions and options. Participants and responses are not copied.
+- Add `Survey::duplicate()` to duplicate a survey programmatically.
+
 ## v2.0.2 - 2026-04-07
 
 Update resource action syntax and component imports for Filament v4
