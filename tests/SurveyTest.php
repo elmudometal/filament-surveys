@@ -44,6 +44,26 @@ it('can duplicate a survey with its questions and options', function () {
         ->and(SurveyOption::count())->toBe(4);
 });
 
+it('can duplicate a survey loaded with relationship counts', function () {
+    $survey = Survey::factory()->create(['title' => 'Original']);
+    SurveyQuestion::factory()->count(2)->create(['survey_id' => $survey->id]);
+
+    // The Filament table loads records with `questions_count`.
+    $record = Survey::withCount('questions')->findOrFail($survey->id);
+
+    $copy = $record->duplicate([
+        'title' => 'Copia',
+        'start_date' => '2027-01-01',
+        'end_date' => '2027-01-31',
+    ]);
+
+    expect($copy->exists)->toBeTrue()
+        ->and($copy->slug)->toBe('copia')
+        ->and($copy->description)->toBe($survey->description)
+        ->and($copy->sections)->toBe($survey->sections)
+        ->and($copy->questions()->count())->toBe(2);
+});
+
 it('can add questions and options to a survey', function () {
     $survey = Survey::factory()->create();
 
